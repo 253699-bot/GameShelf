@@ -1,0 +1,14 @@
+{
+  "name": "gameshelf-backend",
+  "version": "1.0.0",
+  "description": "Backend independiente para GameShelf con json-server y json-server-auth",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "json-server": "0.17.4",
+    "json-server-auth": "2.1.0"
+  }
+}
