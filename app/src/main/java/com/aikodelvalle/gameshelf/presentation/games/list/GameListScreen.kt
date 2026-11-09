@@ -48,7 +48,7 @@ fun GameListScreen(
     onNavigateToCreateGame: () -> Unit,
     onNavigateToEditGame: (Int) -> Unit,
     onLogout: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -69,42 +69,42 @@ fun GameListScreen(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
             ) {
                 // Header
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "Mi colección",
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.primary
                         )
                         Text(
                             text = "Tus videojuegos en un solo lugar",
                             fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.secondary
                         )
                     }
                     OutlinedButton(
                         onClick = onLogout,
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = MaterialTheme.colorScheme.secondary,
-                        ),
+                            contentColor = MaterialTheme.colorScheme.secondary
+                        )
                     ) {
                         Text("Cerrar sesión", fontSize = 12.sp)
                     }
@@ -116,20 +116,20 @@ fun GameListScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "${uiState.games.size} videojuegos",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
 
                     Button(
                         onClick = onNavigateToCreateGame,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                        ),
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
                     ) {
                         Text("+ Agregar videojuego", fontWeight = FontWeight.Bold)
                     }
@@ -144,7 +144,7 @@ fun GameListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f),
-                            contentAlignment = Alignment.Center,
+                            contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                         }
@@ -155,20 +155,20 @@ fun GameListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f),
-                            contentAlignment = Alignment.Center,
+                            contentAlignment = Alignment.Center
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
                                     text = uiState.errorMessage!!,
                                     color = MaterialTheme.colorScheme.error,
-                                    fontSize = 14.sp,
+                                    fontSize = 14.sp
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Button(
                                     onClick = { viewModel.loadGames() },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                    ),
+                                        containerColor = MaterialTheme.colorScheme.primary
+                                    )
                                 ) {
                                     Text("Reintentar")
                                 }
@@ -181,21 +181,21 @@ fun GameListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f),
-                            contentAlignment = Alignment.Center,
+                            contentAlignment = Alignment.Center
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
                                     text = "Todavía no tienes videojuegos en tu colección",
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Medium,
-                                    color = MaterialTheme.colorScheme.onBackground,
+                                    color = MaterialTheme.colorScheme.onBackground
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Button(
                                     onClick = onNavigateToCreateGame,
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                    ),
+                                        containerColor = MaterialTheme.colorScheme.primary
+                                    )
                                 ) {
                                     Text("Agregar el primero")
                                 }
@@ -207,17 +207,13 @@ fun GameListScreen(
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth(),
                             contentPadding = PaddingValues(bottom = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            items(
-                                items = uiState.games,
-                                key = { game -> game.id },
-                            ) { game ->
+                            items(uiState.games, key = { it.id }) { game ->
                                 GameCard(
                                     game = game,
-                                    isOwner = (game.userId == uiState.currentUserId),
                                     onEditClick = { onNavigateToEditGame(game.id) },
-                                    onDeleteClick = { viewModel.onDeleteClick(game) },
+                                    onDeleteClick = { viewModel.onDeleteClick(game) }
                                 )
                             }
                         }
@@ -232,12 +228,12 @@ fun GameListScreen(
                     title = {
                         Text(
                             text = "¿Eliminar videojuego?",
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.Bold
                         )
                     },
                     text = {
                         Text(
-                            text = "¿Estás seguro de que deseas eliminar '${uiState.gameToDelete!!.title}' de tu colección?",
+                            text = "¿Estás seguro de que deseas eliminar '${uiState.gameToDelete!!.title}' de tu colección?"
                         )
                     },
                     confirmButton = {
@@ -245,14 +241,14 @@ fun GameListScreen(
                             onClick = { viewModel.confirmDelete() },
                             enabled = !uiState.isDeleting,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error,
-                            ),
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
                         ) {
                             if (uiState.isDeleting) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(18.dp),
                                     color = MaterialTheme.colorScheme.onError,
-                                    strokeWidth = 2.dp,
+                                    strokeWidth = 2.dp
                                 )
                             } else {
                                 Text("Eliminar")
@@ -262,12 +258,12 @@ fun GameListScreen(
                     dismissButton = {
                         OutlinedButton(
                             onClick = { viewModel.onCancelDelete() },
-                            enabled = !uiState.isDeleting,
+                            enabled = !uiState.isDeleting
                         ) {
                             Text("Cancelar")
                         }
                     },
-                    containerColor = MaterialTheme.colorScheme.surface,
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             }
         }
@@ -277,34 +273,33 @@ fun GameListScreen(
 @Composable
 private fun GameCard(
     game: Game,
-    isOwner: Boolean,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = game.title,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -315,20 +310,20 @@ private fun GameCard(
                     modifier = Modifier
                         .background(
                             color = statusBg.copy(alpha = 0.15f),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(12.dp)
                         )
                         .border(
                             width = 1.dp,
                             color = statusBg,
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(12.dp)
                         )
-                        .padding(horizontal = 10.dp, vertical = 4.dp),
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = statusText,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }
@@ -338,7 +333,7 @@ private fun GameCard(
             Text(
                 text = "${game.platform} • ${game.genre} (${game.releaseYear})",
                 fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (game.notes.isNotBlank()) {
@@ -346,24 +341,22 @@ private fun GameCard(
                 Text(
                     text = "Notas: ${game.notes}",
                     fontSize = 13.sp,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
-            if (isOwner) {
-                Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    TextButton(onClick = onEditClick) {
-                        Text("Editar", color = MaterialTheme.colorScheme.primary)
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    TextButton(onClick = onDeleteClick) {
-                        Text("Eliminar", color = MaterialTheme.colorScheme.error)
-                    }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = onEditClick) {
+                    Text("Editar", color = MaterialTheme.colorScheme.primary)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextButton(onClick = onDeleteClick) {
+                    Text("Eliminar", color = MaterialTheme.colorScheme.error)
                 }
             }
         }

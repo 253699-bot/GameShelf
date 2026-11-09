@@ -28,10 +28,7 @@ object ViewModelFactory {
         }
         initializer {
             val app = gameShelfApplication()
-            GameListViewModel(
-                gameRepository = app.container.gameRepository,
-                sessionRepository = app.container.sessionRepository
-            )
+            GameListViewModel(gameRepository = app.container.gameRepository)
         }
         initializer {
             val app = gameShelfApplication()

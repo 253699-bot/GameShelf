@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.aikodelvalle.gameshelf.core.common.Resource
 import com.aikodelvalle.gameshelf.domain.model.Game
 import com.aikodelvalle.gameshelf.domain.repository.GameRepository
-import com.aikodelvalle.gameshelf.domain.repository.SessionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +13,6 @@ import kotlinx.coroutines.launch
 
 data class GameListUiState(
     val games: List<Game> = emptyList(),
-    val currentUserId: Int = -1,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val gameToDelete: Game? = null,
@@ -22,16 +20,14 @@ data class GameListUiState(
 )
 
 class GameListViewModel(
-    private val gameRepository: GameRepository,
-    private val sessionRepository: SessionRepository
+    private val gameRepository: GameRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameListUiState())
     val uiState: StateFlow<GameListUiState> = _uiState.asStateFlow()
 
     fun loadGames() {
-        val userId = sessionRepository.getUserId()
-        _uiState.update { it.copy(currentUserId = userId, isLoading = true, errorMessage = null) }
+        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
         viewModelScope.launch {
             when (val result = gameRepository.getGames()) {
                 is Resource.Success -> {
