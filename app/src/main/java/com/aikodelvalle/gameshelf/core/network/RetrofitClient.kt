@@ -40,7 +40,7 @@ class RetrofitClient(
         val contentType = "application/json".toMediaType()
 
         Retrofit.Builder()
-            .baseUrl("http://34.228.244.157/")
+            .baseUrl("https://gameshelf-api-aiko.duckdns.org/")
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
