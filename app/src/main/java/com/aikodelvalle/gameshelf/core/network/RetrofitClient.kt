@@ -40,7 +40,7 @@ class RetrofitClient(
         val contentType = "application/json".toMediaType()
 
         Retrofit.Builder()
-            .baseUrl("http://192.168.1.12:3000/")
+            .baseUrl("http://34.228.244.157/")
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
